@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './routes'
+import VueResource from 'vue-resource'
+import vuelidate from 'vuelidate'
+
+// vuex
+import store from './store/store'
+
 
 import { MdCard } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
@@ -10,7 +16,14 @@ Vue.use(MdCard)
 import Button from './components/ui/Button.vue'
 Vue.component('app-button',Button)
 
+// resource
+Vue.use(VueResource)
+Vue.http.options.root = ''
+
+Vue.use(vuelidate)
+
 new Vue({
   render: h => h(App),
   router,
+  store,
 }).$mount('#app')
