@@ -3,8 +3,20 @@ import VueRouter from 'vue-router'
 
 import Home from './components/home/Index.vue'
 import Signin from './components/signin/Index.vue'
+import Dashboard from './components/dashboard/Index.vue'
+import Store from './store/store'
 
 Vue.use(VueRouter)
+
+const authGuard = {
+    beforeEnter: (to, from, next) => {
+        if(Store.state.admin.token){
+            next()
+        }else{
+            next('/')
+        }
+    }
+}
 
 const routes = [
     {
@@ -14,6 +26,10 @@ const routes = [
     {
         path: '/signin',
         component: Signin
+    },
+    {
+        path: '/dashboard',
+        component: Dashboard,children:[],...authGuard
     }
 ]
 
