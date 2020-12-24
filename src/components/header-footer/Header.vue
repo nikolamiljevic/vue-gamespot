@@ -14,7 +14,7 @@
             <div v-if="isAuth">
                 <ul>
                     <li> <span @click="logoutUser">Logout</span></li>
-                    <li> <router-link to="/dashboar">Dashborad</router-link> </li>
+                    <li> <router-link to="/dashboard">Dashborad</router-link> </li>
                 </ul>
             </div>
         </div>

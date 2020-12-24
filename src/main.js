@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './routes'
 import VueResource from 'vue-resource'
 import vuelidate from 'vuelidate'
+import wysiwyg from 'vue-wysiwyg'
 
 // vuex
 import store from './store/store'
@@ -21,6 +22,7 @@ Vue.use(VueResource)
 Vue.http.options.root = ''
 
 Vue.use(vuelidate)
+Vue.use(wysiwyg)
 
 new Vue({
   render: h => h(App),
