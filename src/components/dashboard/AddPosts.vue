@@ -52,6 +52,21 @@
             </div>
             <button type="submit">Add post</button>
         </form>
+
+        <md-dialog :md-active="dialog">
+            <p>
+                Your post has no content, are you sure you want to post this?
+            </p>
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="dialogOnCancel">Oops, i want to add it.</md-button>
+                <md-button class="md-primary" @click="dialogOnConfirm" >Yes i am sure.</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+
+        <div v-if="addpost" class="post_succesfull">
+            Posted successfully
+        </div>
+
     </div>
 </template>
 
@@ -63,6 +78,7 @@ export default {
 
     data() {
         return {
+            dialog:false,
             formdata:{
                 title:'',
                 desc:'',
@@ -85,9 +101,45 @@ export default {
             }
         }
     },
+    computed: {
+        addpost() {
+            let status = this.$store.getters['admin/addPostStatus'];
+            if(status) {
+                this.clearPost()
+            }
+            return status;
+        }
+    },
     methods: {
+        clearPost() {
+            this.$nextTick(() => { this.$v.$reset() })
+            this.formdata = {
+                title:'',
+                desc:'',
+                content:'',
+                rating:''
+            }
+        },
         submitHandler() {
-
+            if(!this.$v.$invalid) {
+                if(this.formdata.content === '') {
+                    this.dialog = true;
+                } else {
+                    this.addPost()
+                }
+            } else {
+                alert('something is wrong')
+            }
+        },
+        dialogOnCancel() {
+            this.dialog = false
+        },
+        dialogOnConfirm() {
+            this.dialog = false;
+            this.addPost()
+        },
+        addPost() {
+            this.$store.dispatch('admin/addPost', this.formdata)
         }
     }
 }
